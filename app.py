@@ -21,6 +21,11 @@ def root():
 
 @app.route('/recommendations')
 def recommendations():
+    """
+    e.g.
+
+    http://127.0.0.1:5000/recommendations?song_id=7fRruZ12gXGwBs0zXQ6e5V
+    """
     song_id = request.args['song_id']
     result = song_choice(song_id, df)
     return result
