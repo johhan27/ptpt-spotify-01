@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from model import Track, Song, Match, DB
+from spotify import upsert_songs
 from sqlalchemy.exc import IntegrityError
 import random
 import os  # in case we use Spotify API
@@ -17,6 +18,11 @@ df = pd.read_csv("https://raw.githubusercontent.com/brennanashley/DS-Build-3-Spo
 def root():
     DB.create_all()
     return render_template('landing.html', matches=Match.query.all())
+
+@app.route('/test')
+def test():
+    upsert_songs(df)
+    return render_template('songs.html', songs=Song.query.all())
 
 
 @app.route('/recommendations')
